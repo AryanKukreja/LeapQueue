@@ -1,3 +1,40 @@
 <resources>
     <string name="app_name">LeapQueue</string>
+    <string name="welcome_basic">Welcome!</string>
+    <string name="do_search">Search</string>
+    <string name="store_name">Store Name</string>
+    <string name="location">Location</string>
+    <string name="search">Search</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="create_acc">Create Account</string>
+    <string name="log_in">Log In</string>
+    <string name="log_out">Log Out</string>
+    <string name="forgot_pw">Forgot Password</string>
+    <string name="name">Name</string>
+    <string name="login_credentials">Login Credentials</string>
+    <string name="login_here">Hello there, welcome back</string>
+    <string name="forgot_password_text">Enter the email to reset your password. The email must be associated with an account</string>
+    <string name="email_verify_note">Check your inbox to verify your email address. You cannot proceed until then.</string>
+    <string name="cont">Continue</string>
+    <string name="resend">Resend Verification</string>
+    <string name="fname">First</string>
+    <string name="lname">Last</string>
+    <string name="email">Email</string>
+    <string name="passw">Password</string>
+    <string name="conf_passw">Confirm Password</string>
+    <string name="reset_passw">Reset Password</string>
+    <string name="verify_email">Verify Email</string>
+    <string name="submit">Submit</string>
+    <string name="go_back_signup">Login / Sign-Up</string>
+    <string name="ret">To change accounts, click on the below button</string>
+
+    <string name="find_store">Search Store</string>
+    <string name="find_store_desc">Find reviews for shops or add your own</string>
+    <string name="my_reviews">Reviews</string>
+    <string name="my_profile">Profile</string>
+    <string name="about">About App</string>
+    <string name="logout">Log Out</string>
+    <string name="results">Results</string>
+
+    <string name="welcome" formatted="true">Welcome, %1$s %2$s!</string>
 </resources>

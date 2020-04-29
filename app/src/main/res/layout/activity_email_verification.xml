@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="fill_parent"
+    android:layout_width="fill_parent"
+    android:background="@drawable/scrollview_background"
+    android:id="@+id/scroll_view"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/linearlayout_corners"
+        android:id="@+id/linear_view"
+        android:padding="40dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_gravity="center"
+        tools:context=".SignUpActivity">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="@font/roboto"
+            android:text="@string/verify_email"
+            android:textAlignment="center"
+            android:textSize="30sp"
+            android:textStyle="" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/email_verify_note"
+            android:textAlignment="center"
+            android:textSize="16sp"/>
+
+        <Button
+            android:id="@+id/resend_ver_email"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="25dp"
+            android:text="@string/resend"
+            android:layout_marginTop="5dp"
+            app:cornerRadius="16dp" />
+
+        <Button
+            android:id="@+id/continue_login"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/cont"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="25dp"
+            android:layout_marginBottom="80dp"
+            android:layout_marginTop="5dp"
+            app:cornerRadius="16dp" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ret"
+            android:textAlignment="center"
+            android:textSize="16sp"/>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/go_to_login"
+                android:layout_width="0.0dip" android:layout_height="fill_parent"
+                android:text="@string/go_back_signup"
+                android:layout_marginTop="5dp"
+                app:cornerRadius="16dp"
+                android:backgroundTint="@color/reddish"
+                android:layout_weight="1.0" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

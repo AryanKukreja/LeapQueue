@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@drawable/scrollview_background">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/welcome"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="35dp"
+            android:layout_marginEnd="25dp"
+            android:layout_marginTop="50dp"
+            android:gravity="center"
+            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MaterialCardView.Cut">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/welcome_msg"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textAppearance="?attr/textAppearanceHeadline4">
+
+            </TextView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:orientation="horizontal">
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="300dp"
+                android:id="@+id/search_store_card"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="35dp"
+                android:layout_marginEnd="25dp"
+                android:foregroundGravity="center"
+                android:clickable="true"
+                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MaterialCardView.Cut">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="10dp">
+
+                    <ImageView
+                        android:layout_width="89dp"
+                        android:layout_height="74dp"
+                        android:layout_marginStart="10dp"
+                        android:scaleType="fitCenter"
+                        app:srcCompat="@drawable/shop" />
+
+                    <LinearLayout
+                        android:layout_width="171dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:text="@string/find_store"
+                            android:textAppearance="?attr/textAppearanceHeadline5" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:text="@string/find_store_desc"
+                            android:textAppearance="?attr/textAppearanceBody1" />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:orientation="horizontal">
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="35dp"
+                android:layout_marginEnd="25dp"
+                android:clickable="true"
+                android:id="@+id/my_profile"
+                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MaterialCardView.Cut">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:padding="10dp">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:scaleType="fitCenter"
+                        app:srcCompat="@drawable/profile_icon" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/my_profile"
+                        android:textAlignment="center"
+                        android:textAppearance="?attr/textAppearanceHeadline6" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="25dp"
+                android:layout_marginEnd="50dp"
+                android:clickable="true"
+                android:id="@+id/my_reviews"
+                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MaterialCardView.Cut">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:scaleType="fitCenter"
+                        app:srcCompat="@drawable/review_icon" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/my_reviews"
+                        android:textAlignment="center"
+                        android:textAppearance="?attr/textAppearanceHeadline6"
+                        />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:orientation="horizontal">
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="35dp"
+                android:layout_marginEnd="25dp"
+                android:foregroundGravity="center"
+                android:clickable="true"
+                android:id="@+id/about"
+                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MaterialCardView.Cut">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:padding="10dp">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:scaleType="fitCenter"
+                        app:srcCompat="@drawable/info" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/about"
+                        android:textAlignment="center"
+                        android:textAppearance="?attr/textAppearanceHeadline6" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/logout"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="25dp"
+                android:layout_marginEnd="50dp"
+                android:clickable="true"
+                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MaterialCardView.Cut">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:scaleType="centerInside"
+                        app:srcCompat="@drawable/logout" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/logout"
+                        android:textAlignment="center"
+                        android:textAppearance="?attr/textAppearanceHeadline6"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/blank"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="30dp"
+            android:gravity="center"
+            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MaterialCardView.Cut">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textSize="0sp">
+
+            </TextView>
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

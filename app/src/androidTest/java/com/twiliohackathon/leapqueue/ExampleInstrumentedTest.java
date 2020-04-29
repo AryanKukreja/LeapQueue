@@ -1,4 +1,4 @@
-package com.example.leapqueue;
+package com.twiliohackathon.leapqueue;
 
 import android.content.Context;
 
@@ -22,6 +22,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
-        assertEquals("com.example.leapqueue", appContext.getPackageName());
+        assertEquals("com.twiliohackathon.leapqueue", appContext.getPackageName());
     }
 }

@@ -1,4 +1,4 @@
-package com.example.leapqueue;
+package com.twiliohackathon.leapqueue;
 
 import org.junit.Test;
 
