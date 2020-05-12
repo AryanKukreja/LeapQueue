@@ -37,6 +37,8 @@ dependencies {
     implementation 'com.android.volley:volley:1.1.1'
     implementation 'com.google.android.material:material:1.2.0-alpha06'
     implementation files('libs/json-20190722.jar')
+
+    implementation 'com.github.travijuu:numberpicker:1.0.7'
 }
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'

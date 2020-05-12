@@ -35,6 +35,37 @@
     <string name="about">About App</string>
     <string name="logout">Log Out</string>
     <string name="results">Results</string>
+    <string name="website">Visit Website</string>
 
     <string name="welcome" formatted="true">Welcome, %1$s %2$s!</string>
+    <string name="rating">Overall Ratings</string>
+    <string name="queue_time">Queue duration: </string>
+    <string name="item_avail">Item Availability: </string>
+    <string name="staff_eff">Staff Efficiency: </string>
+    <string name="no_reviews">You have no reviews for this store</string>
+    <string name="this_reviews">Your review for this store: </string>
+    <string name="add_review">Add Review</string>
+    <string name="edit_reviews">Edit/Delete Review</string>
+    <string name="title">Other User Reviews</string>
+
+    <string name="your_review">Your Review</string>
+    <string name="del_review">Delete Review</string>
+    <string name="edit_review">Edit Your Review</string>
+    <string name="comments">Comments</string>
+    <string name="enter_comments">Enter Comments Here</string>
+    <string name="date">Visit Date</string>
+    <string name="time">Visit Time</string>
+    <string name="update">Update</string>
+    <string name="sub">Submit</string>
+    <string name="plus">+</string>
+    <string name="refresh">Refresh</string>
+
+    <string-array name="time_ranges">
+        <item>5am - 9am</item>
+        <item>9am - 12pm</item>
+        <item>12pm - 3pm</item>
+        <item>3pm - 8pm</item>
+        <item>8pm - 12am</item>
+        <item>12am - 5am</item>
+    </string-array>
 </resources>

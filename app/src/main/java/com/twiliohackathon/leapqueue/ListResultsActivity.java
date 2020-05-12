@@ -83,8 +83,8 @@ public class ListResultsActivity extends AppCompatActivity {
                 Intent transfer = new Intent(ListResultsActivity.this, SelectedStoreActivity.class);
                 transfer.putExtra("name", storeName);
                 transfer.putExtra("type", storeType);
-                transfer.putExtra("website", storeAddress);
-                transfer.putExtra("address", storeWebsite);
+                transfer.putExtra("website", storeWebsite);
+                transfer.putExtra("address", storeAddress);
                 transfer.putExtra("postal", storePostal);
                 startActivity(transfer);
             }
@@ -98,7 +98,6 @@ public class ListResultsActivity extends AppCompatActivity {
         layout.addView(address);
 
         LinearLayout buttonLayout = createLinLay(10, true);
-//        buttonLayout.addView(linkButton);
         buttonLayout.addView(chooseStoreButton);
 
         layout.addView(buttonLayout);
@@ -148,7 +147,6 @@ public class ListResultsActivity extends AppCompatActivity {
         card.setContentPadding(20, 20, 20, 20);
         card.setCardElevation(6);
         card.setClickable(true);
-//        card.setId("@id/");
         card.setUseCompatPadding(true);
 
         return card;
