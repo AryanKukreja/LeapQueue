@@ -30,7 +30,6 @@ public class EmailVerificationActivity extends AppCompatActivity {
     FirebaseAuth mfirebaseAuth;
     FirebaseUser user;
 
-    String fname, lname;
     private FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
 
     @Override
@@ -59,22 +58,8 @@ public class EmailVerificationActivity extends AppCompatActivity {
                 });
 
                 if (user.isEmailVerified()) {
-                    AlertDialog.Builder alert = new AlertDialog.Builder(EmailVerificationActivity.this);
-
-                    alert.setMessage("Your email is already verified. Close this message and Click \"Continue\"");
-                    alert.setTitle("Account Already Verified");
-
-                    alert.setNegativeButton("Close", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.cancel();
-                        }
-                    });
-
-                    AlertDialog dialog = alert.create();
-                    dialog.show();
-                }
-                else {
+                    createAlert("Account Already Verified","Your email is already verified. Close this message and Click \"Continue\"");
+                } else {
                     user.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
@@ -101,22 +86,10 @@ public class EmailVerificationActivity extends AppCompatActivity {
                     }
                 });
                 if (!user.isEmailVerified()) {
-                    AlertDialog.Builder alert = new AlertDialog.Builder(EmailVerificationActivity.this);
-
-                    alert.setMessage("Your email has not been verified. Close this message, click \"Resend Verification Email\", and click on the link sent to the provided email address");
-                    alert.setTitle("Account Not Verified");
-
-                    alert.setNegativeButton("Close", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.cancel();
-                        }
-                    });
-
-                    AlertDialog dialog = alert.create();
-                    dialog.show();
-                }
-                else {
+                    createAlert("Account Not Verified",
+                            "Your email has not been verified. Close this message, click \"Resend Verification Email\", and click on the link sent to the provided email address"
+                    );
+                } else {
                     createDocument(userData.getString("f_name"), userData.getString("l_name"));
 
                     Intent transfer = new Intent(EmailVerificationActivity.this, LoggedInActivity.class);
@@ -132,8 +105,8 @@ public class EmailVerificationActivity extends AppCompatActivity {
 
     public void createDocument(String firstName, String lastName) {
         Map<String, Object> document = new HashMap<>();
-        document.put("first_name", fname);
-        document.put("last_name", lname);
+        document.put("first_name", firstName);
+        document.put("last_name", lastName);
 
         this.mFirestore.collection("Users").document(Objects.requireNonNull(user.getEmail()))
                 .set(document)
@@ -148,5 +121,20 @@ public class EmailVerificationActivity extends AppCompatActivity {
                         Log.e(TAG, "User could not be added to the Firestore" + e.getMessage());
                     }
                 });
+    }
+
+    public void createAlert(String title, String msg) {
+        AlertDialog.Builder alert = new AlertDialog.Builder(EmailVerificationActivity.this);
+
+        alert.setMessage(msg);
+        alert.setTitle(title);
+        alert.setNegativeButton("Close", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        alert.create().show();
     }
 }

@@ -15,24 +15,15 @@ import com.google.firebase.auth.FirebaseAuth;
 
 @SuppressWarnings("ConstantConditions")
 public class ForgotPasswordActivity extends AppCompatActivity {
-    TextInputLayout userEmail;
-    Button sendPass;
-    FirebaseAuth firebaseAuth;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forgot_password);
 
-        this.userEmail = findViewById(R.id.edit_email);
-        this.sendPass = findViewById(R.id.submit_pw_reset);
-
-        this.firebaseAuth = FirebaseAuth.getInstance();
-
-        sendPass.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.submit_pw_reset).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                firebaseAuth.sendPasswordResetEmail(userEmail.getEditText().getText().toString())
+                FirebaseAuth.getInstance().sendPasswordResetEmail(((TextInputLayout) findViewById(R.id.edit_email)).getEditText().getText().toString())
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {

@@ -81,11 +81,7 @@ public class UserReviewActivity extends AppCompatActivity {
         date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Calendar cldr = Calendar.getInstance();
-                int day = cldr.get(Calendar.DAY_OF_MONTH);
-                int month = cldr.get(Calendar.MONTH);
-                int year = cldr.get(Calendar.YEAR);
-                // date picker dialog
+                final Calendar cal = Calendar.getInstance();
                 picker = new DatePickerDialog(UserReviewActivity.this,
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
@@ -93,7 +89,7 @@ public class UserReviewActivity extends AppCompatActivity {
                                 String output = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year;
                                 date.setText(output);
                             }
-                        }, year, month, day);
+                        }, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
                 picker.show();
             }
         });
@@ -141,8 +137,7 @@ public class UserReviewActivity extends AppCompatActivity {
                                                         public void onComplete(@NonNull Task<Void> task) {
                                                             if (task.isSuccessful()) {
                                                                 finish();
-                                                            }
-                                                            else {
+                                                            } else {
                                                                 Toast.makeText(UserReviewActivity.this, "Error: " + task.getException(), Toast.LENGTH_LONG).show();
                                                             }
                                                         }
@@ -189,21 +184,18 @@ public class UserReviewActivity extends AppCompatActivity {
                                         QuerySnapshot snapshot = task.getResult();
                                         for (QueryDocumentSnapshot doc : snapshot) {
                                             store.collection("Reviews").document(doc.getId())
-                                                .set(dbData2)
-                                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                .set(dbData2).addOnCompleteListener(new OnCompleteListener<Void>() {
                                                     @Override
                                                     public void onComplete(@NonNull Task<Void> task) {
                                                         if (task.isSuccessful()) {
                                                             Toast.makeText(UserReviewActivity.this, "Your update has been saved. Go back to the last page", Toast.LENGTH_LONG).show();
-                                                        }
-                                                        else {
+                                                        } else {
                                                             Toast.makeText(UserReviewActivity.this, "Error: " + task.getException(), Toast.LENGTH_LONG).show();
                                                         }
                                                     }
                                                 });
                                         }
-                                    }
-                                    else {
+                                    } else {
                                         store.collection("Reviews").add(dbData2)
                                                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                                     @Override
@@ -221,8 +213,7 @@ public class UserReviewActivity extends AppCompatActivity {
                             });
                 }
             });
-        }
-        else {
+        }  else {
             Log.e("UserReviewActivity", "Something went wrong");
         }
     }

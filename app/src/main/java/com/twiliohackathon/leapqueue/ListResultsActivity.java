@@ -18,6 +18,7 @@ import com.google.android.material.card.MaterialCardView;
 
 import java.util.ArrayList;
 
+@SuppressWarnings({"ConstantConditions", "deprecation"})
 public class ListResultsActivity extends AppCompatActivity {
 
     ArrayList<Store> stores;
@@ -107,10 +108,9 @@ public class ListResultsActivity extends AppCompatActivity {
 
     public TextView createTextView(String text, int type) {
         TextView data = new TextView(getApplicationContext());
-        Typeface typeface = ResourcesCompat.getFont(ListResultsActivity.this, R.font.roboto_black);
 
         data.setLayoutParams(params);
-        data.setTypeface(typeface);
+        data.setTypeface(ResourcesCompat.getFont(ListResultsActivity.this, R.font.roboto_black));
         data.setTextColor(getResources().getColor(R.color.black));
         data.setText(text);
 

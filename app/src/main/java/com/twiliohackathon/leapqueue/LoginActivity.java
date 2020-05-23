@@ -53,10 +53,8 @@ public class LoginActivity extends AppCompatActivity {
                                 if (!mFirebaseAuth.getCurrentUser().isEmailVerified()) {
                                     createAlert("Account Not Verified",
                                             "Your account has not been verified. Verify it and then click \"Continue\", or request a email re-send below");
-
                                     startActivity(new Intent(LoginActivity.this, EmailVerificationActivity.class));
-                                }
-                                else {
+                                } else {
                                     startActivity(new Intent(LoginActivity.this, LoggedInActivity.class));
                                 }
                                 finish();
