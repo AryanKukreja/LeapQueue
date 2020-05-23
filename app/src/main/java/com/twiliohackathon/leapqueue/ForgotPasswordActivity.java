@@ -6,21 +6,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
-import com.firebase.client.Firebase;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 
+@SuppressWarnings("ConstantConditions")
 public class ForgotPasswordActivity extends AppCompatActivity {
     TextInputLayout userEmail;
     Button sendPass;
-
     FirebaseAuth firebaseAuth;
 
     @Override

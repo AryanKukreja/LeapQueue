@@ -31,7 +31,7 @@ public class SearchQueryActivity extends AppCompatActivity {
 
     private RequestQueue mQueue;
 
-    private String key = "AjqfThnMDUJgbjMLKkOmbp0F8W73H4VG1P-Njsjy5nbXMIH84whR55Jb1HrOdzSQ";
+    private String key = getString(R.string.BING_MAPS_KEY);
     String baseUrl = "https://dev.virtualearth.net/REST/v1/LocalSearch/";
 
     @Override
@@ -106,8 +106,6 @@ public class SearchQueryActivity extends AppCompatActivity {
     }
 
     public String buildUrl(String baseUrl, String store, String town, String key) {
-        String x = baseUrl + "?query=" + TextUtils.join("%20", store.split(" ")) + "%20" + TextUtils.join("%20", town.split(" ")) + "&key=" + key;
-        System.out.println(x);
-        return x;
+        return baseUrl + "?query=" + TextUtils.join("%20", store.split(" ")) + "%20" + TextUtils.join("%20", town.split(" ")) + "&key=" + key;
     }
 }

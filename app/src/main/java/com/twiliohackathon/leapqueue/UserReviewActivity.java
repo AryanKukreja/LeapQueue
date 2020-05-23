@@ -42,9 +42,7 @@ public class UserReviewActivity extends AppCompatActivity {
     RatingBar item, staff;
     TextInputEditText comments;
     TextView name, addr;
-    NumberPicker queue;
-
-    DatePickerDialog picker;
+    NumberPicker queue, hour, minute;
 
     MaterialButton delete, submit;
     TextInputEditText date;
@@ -71,7 +69,7 @@ public class UserReviewActivity extends AppCompatActivity {
         TextView title = findViewById(R.id.review_action);
 
         this.queue = findViewById(R.id.queue);
-        queue.setMax(300);
+        queue.setMax(500);
         queue.setMin(0);
         queue.setUnit(4);
         queue.setValue(1);
@@ -99,18 +97,14 @@ public class UserReviewActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 final Calendar cldr = Calendar.getInstance();
-                int day = cldr.get(Calendar.DAY_OF_MONTH);
-                int month = cldr.get(Calendar.MONTH);
-                int year = cldr.get(Calendar.YEAR);
-                // date picker dialog
-                picker = new DatePickerDialog(UserReviewActivity.this,
+                DatePickerDialog picker = new DatePickerDialog(UserReviewActivity.this,
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                                 String output = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year;
                                 date.setText(output);
                             }
-                        }, year, month, day);
+                        }, cldr.get(Calendar.YEAR), cldr.get(Calendar.MONTH), cldr.get(Calendar.DAY_OF_MONTH));
                 picker.show();
             }
         });
