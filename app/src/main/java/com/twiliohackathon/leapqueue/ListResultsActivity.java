@@ -22,8 +22,6 @@ import java.util.ArrayList;
 public class ListResultsActivity extends AppCompatActivity {
 
     ArrayList<Store> stores;
-    LinearLayout resultsContainer;
-    ViewGroup.LayoutParams params;
 
     final static int TITLE = 0;
     final static int ADDRESS = 1;
@@ -34,27 +32,21 @@ public class ListResultsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_results);
 
-        this.resultsContainer = findViewById(R.id.results_container);
-        this.params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-
         Bundle userData = getIntent().getExtras();
         if (userData != null) {
             this.stores = getIntent().getParcelableArrayListExtra("stores");
             if (this.stores.size() == 0) {
                 Log.e("ListResultsActivity", "No stores found");
             }
-        }
-        else System.exit(-1);
+        } else System.exit(-1);
 
-        for (Store store : this.stores) {
-            this.addStoreToView(store);
-        }
+        for (Store store : this.stores) this.addStoreToView(store);
     }
 
     public void addStoreToView(Store store) {
-        TextView type = createTextView(store.type, TYPE);
-        TextView address = createTextView(store.address, ADDRESS);
-        TextView name = createTextView(store.storeName,TITLE);
+        TextView type = createTextView(store.type, TYPE),
+                address = createTextView(store.address, ADDRESS),
+                name = createTextView(store.storeName,TITLE);
 
         final String storeWebsite = store.website;
         final String storeName = store.storeName;
@@ -96,20 +88,19 @@ public class ListResultsActivity extends AppCompatActivity {
         shopCard.addView(shopData);
         shopCard.setBottom(20);
 
-        this.resultsContainer.addView(shopCard);
+        ((LinearLayout) findViewById(R.id.results_container)).addView(shopCard);
     }
 
     public MaterialButton createButton(String textField) {
         MaterialButton button = new MaterialButton(ListResultsActivity.this);
         button.setText(textField);
-
         return button;
     }
 
     public TextView createTextView(String text, int type) {
         TextView data = new TextView(getApplicationContext());
 
-        data.setLayoutParams(params);
+        data.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
         data.setTypeface(ResourcesCompat.getFont(ListResultsActivity.this, R.font.roboto_black));
         data.setTextColor(getResources().getColor(R.color.black));
         data.setText(text);

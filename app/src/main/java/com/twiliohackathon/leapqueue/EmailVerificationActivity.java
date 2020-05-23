@@ -26,19 +26,14 @@ import java.util.Objects;
 public class EmailVerificationActivity extends AppCompatActivity {
 
     private static final String TAG = "EmailVerificationActivity";
-    Button resend, cont;
     FirebaseAuth mfirebaseAuth;
     FirebaseUser user;
-
-    private FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_email_verification);
 
-        this.resend = findViewById(R.id.resend_ver_email);
-        this.cont = findViewById(R.id.continue_login);
         this.mfirebaseAuth = FirebaseAuth.getInstance();
         this.user = mfirebaseAuth.getCurrentUser();
 
@@ -47,7 +42,7 @@ public class EmailVerificationActivity extends AppCompatActivity {
             System.exit(-1);
         }
 
-        this.resend.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.resend_ver_email).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Objects.requireNonNull(mfirebaseAuth.getCurrentUser()).reload().addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -76,7 +71,7 @@ public class EmailVerificationActivity extends AppCompatActivity {
 
         });
 
-        this.cont.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.continue_login).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Objects.requireNonNull(mfirebaseAuth.getCurrentUser()).reload().addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -108,7 +103,7 @@ public class EmailVerificationActivity extends AppCompatActivity {
         document.put("first_name", firstName);
         document.put("last_name", lastName);
 
-        this.mFirestore.collection("Users").document(Objects.requireNonNull(user.getEmail()))
+        FirebaseFirestore.getInstance().collection("Users").document(Objects.requireNonNull(user.getEmail()))
                 .set(document)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override

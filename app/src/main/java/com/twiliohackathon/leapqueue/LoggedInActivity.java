@@ -19,12 +19,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 @SuppressWarnings("ConstantConditions")
 public class LoggedInActivity extends AppCompatActivity {
-    MaterialCardView logout, search;
     TextView welcome;
-    FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,9 +29,6 @@ public class LoggedInActivity extends AppCompatActivity {
         setContentView(R.layout.activity_logged_in);
 
         this.welcome = findViewById(R.id.welcome_msg);
-        this.logout = findViewById(R.id.logout);
-        this.search  = findViewById(R.id.search_store_card);
-
         Bundle userData = getIntent().getExtras();
         if (userData != null) {
             welcome.setText(
@@ -46,7 +38,7 @@ public class LoggedInActivity extends AppCompatActivity {
                 ));
         }
         else {
-            db.collection("Users").document(user.getEmail())
+            FirebaseFirestore.getInstance().collection("Users").document(FirebaseAuth.getInstance().getCurrentUser().getEmail())
                 .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -68,7 +60,7 @@ public class LoggedInActivity extends AppCompatActivity {
                 });
         }
 
-        this.logout.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.logout).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FirebaseAuth.getInstance().signOut();
@@ -76,7 +68,7 @@ public class LoggedInActivity extends AppCompatActivity {
             }
         });
 
-        this.search.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.search_store_card).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(LoggedInActivity.this, SearchQueryActivity.class));
@@ -85,7 +77,7 @@ public class LoggedInActivity extends AppCompatActivity {
     }
 
     protected void checkUser() {
-        if (firebaseAuth.getCurrentUser() == null) {
+        if (FirebaseAuth.getInstance().getCurrentUser() == null) {
             startActivity(new Intent(LoggedInActivity.this, WelcomePageActivity.class));
             finish();
         }

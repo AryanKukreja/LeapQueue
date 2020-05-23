@@ -38,15 +38,13 @@ import java.util.Objects;
 @SuppressLint("SimpleDateFormat")
 public class UserReviewActivity extends AppCompatActivity {
     RatingBar item, staff;
-    TextInputEditText comments;
-    TextView name;
+    TextInputEditText comments, date;
     NumberPicker queue, hour, minute;
 
     DatePickerDialog picker;
+    Date dateVal;
 
     MaterialButton delete, submit;
-    TextInputEditText date;
-    Date dateVal;
 
     FirebaseFirestore store;
     String postal;
@@ -57,7 +55,6 @@ public class UserReviewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user_review);
 
         this.submit = findViewById(R.id.submit);
-        this.name = findViewById(R.id.name);
         this.store = FirebaseFirestore.getInstance();
         this.delete = findViewById(R.id.delete);
         this.item = findViewById(R.id.item);
@@ -97,7 +94,7 @@ public class UserReviewActivity extends AppCompatActivity {
         final Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             ((TextView) findViewById(R.id.address)).setText(bundle.getString("address"));
-            this.name.setText(bundle.getString("name"));
+            ((TextView) findViewById(R.id.name)).setText(bundle.getString("name"));
             this.postal = bundle.getString("postal");
 
             if (bundle.getBoolean("reviewPresent")) {
@@ -147,8 +144,7 @@ public class UserReviewActivity extends AppCompatActivity {
                                 });
                     }
                 });
-            }
-            else {
+            }  else {
                 this.delete.setVisibility(View.GONE);
                 this.submit.setText(getResources().getString(R.string.sub));
             }

@@ -33,12 +33,9 @@ import java.util.Objects;
 
 @SuppressWarnings({"FieldCanBeLocal", "ConstantConditions", "deprecation"})
 public class SelectedStoreActivity extends AppCompatActivity {
-
     Store store;
     ImageView titleImg;
     boolean userRevPresent;
-    MaterialButton refresh_button;
-
     private FirebaseUser user;
 
     @Override
@@ -47,7 +44,6 @@ public class SelectedStoreActivity extends AppCompatActivity {
         setContentView(R.layout.activity_selected_store);
 
         this.userRevPresent = false;
-        this.refresh_button = findViewById(R.id.refresh);
         this.user = FirebaseAuth.getInstance().getCurrentUser();
 
         Intent temp = new Intent(SelectedStoreActivity.this, SelectedStoreActivity.class);
@@ -111,7 +107,7 @@ public class SelectedStoreActivity extends AppCompatActivity {
                     }
                 });
 
-        this.refresh_button.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.refresh).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(refresh);
@@ -130,15 +126,12 @@ public class SelectedStoreActivity extends AppCompatActivity {
         if (hash.get("item_availability") != null) {
             review.setItemAvail(Double.parseDouble(hash.get("item_availability").toString()));
         }
-
         if (hash.get("queue_time") != null) {
             review.setQueueTime(Integer.parseInt(hash.get("queue_time").toString()));
         }
-
         if (hash.get("staff_efficiency") != null) {
             review.setStaffEff(Double.parseDouble(hash.get("staff_efficiency").toString()));
         }
-
         if (hash.get("date") != null) {
             review.dateDate = document.getTimestamp("date").toDate();
             Calendar queueDateCal = Calendar.getInstance();
@@ -149,8 +142,7 @@ public class SelectedStoreActivity extends AppCompatActivity {
             if (queueDateCal.get(Calendar.HOUR) > 12) {
                 review.hour = queueDateCal.get(Calendar.HOUR) - 12;
                 review.am = false;
-            }
-            else {
+            }  else {
                 review.hour = queueDateCal.get(Calendar.HOUR);
                 review.am = true;
             }
@@ -160,8 +152,7 @@ public class SelectedStoreActivity extends AppCompatActivity {
         if (hash.get("email").toString().equals(user.getEmail())) {
             addUserReview(review);
             this.userRevPresent = true;
-        }
-        else {
+        }  else {
             putReviewIn(review);
         }
     }
@@ -214,7 +205,7 @@ public class SelectedStoreActivity extends AppCompatActivity {
         final int queue = review.getQueueTime();
         final float eff = review.staffEff.floatValue(),
                 itm = review.itemAvail.floatValue();
-        final String cmnt = review.comment,
+        final String commentData = review.comment,
                 email = user.getEmail(),
                 name = store.storeName,
                 addr = store.address,
@@ -227,7 +218,7 @@ public class SelectedStoreActivity extends AppCompatActivity {
                 transfer.putExtra("qtm", queue);
                 transfer.putExtra("eff", eff);
                 transfer.putExtra("itm", itm);
-                transfer.putExtra("com", cmnt);
+                transfer.putExtra("com", commentData);
                 transfer.putExtra("name", name);
                 transfer.putExtra("address", addr);
                 transfer.putExtra("date", review.dateDate);

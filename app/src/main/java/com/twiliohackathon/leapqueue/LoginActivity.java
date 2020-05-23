@@ -21,7 +21,6 @@ import com.google.firebase.auth.FirebaseUser;
 @SuppressWarnings("ConstantConditions")
 public class LoginActivity extends AppCompatActivity {
     public TextInputLayout emailId, password;
-    Button btnSignIn, btnForgotPw;
     FirebaseAuth mFirebaseAuth;
 
     @Override
@@ -33,10 +32,8 @@ public class LoginActivity extends AppCompatActivity {
 
         this.emailId = findViewById(R.id.edit_email);
         this.password = findViewById(R.id.edit_password);
-        this.btnSignIn = findViewById(R.id.submit_login_details);
-        this.btnForgotPw = findViewById(R.id.forgot_pw);
 
-        this.btnSignIn.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.submit_login_details).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String email = emailId.getEditText().getText().toString();
@@ -75,7 +72,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        this.btnForgotPw.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.forgot_pw).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(LoginActivity.this, ForgotPasswordActivity.class));

@@ -34,7 +34,6 @@ public class SearchQueryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search_query);
 
         mQueue = Volley.newRequestQueue(this);
-
         findViewById(R.id.search_stores).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,19 +53,19 @@ public class SearchQueryActivity extends AppCompatActivity {
                         ArrayList<Store> stores = new ArrayList<>();
                         try {
                             JSONArray resources = response.getJSONArray("resourceSets")
-                                    .getJSONObject(0)
-                                    .getJSONArray("resources");
+                                .getJSONObject(0)
+                                .getJSONArray("resources");
 
                             for (int i = 0; i < resources.length(); i++) {
                                 JSONObject store = resources.getJSONObject(i);
                                 JSONObject address = store.getJSONObject("Address");
 
                                 stores.add(
-                                        new Store(store.getString("name"),
-                                                store.getString("entityType"),
-                                                store.getString("Website"),
-                                                address.getString("formattedAddress"),
-                                                address.getString("postalCode"))
+                                    new Store(store.getString("name"),
+                                        store.getString("entityType"),
+                                        store.getString("Website"),
+                                        address.getString("formattedAddress"),
+                                        address.getString("postalCode"))
                                 );
                             }
                         } catch (Exception e) {
