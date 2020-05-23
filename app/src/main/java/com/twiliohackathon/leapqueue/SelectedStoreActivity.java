@@ -99,10 +99,7 @@ public class SelectedStoreActivity extends AppCompatActivity {
                                         Intent transfer = new Intent(SelectedStoreActivity.this, UserReviewActivity.class);
                                         transfer.putExtra("reviewPresent", false);
                                         transfer.putExtras(userData);
-//                                        transfer.putExtra("name", store.storeName);
-//                                        transfer.putExtra("addr", store.address);
                                         transfer.putExtra("email", FirebaseAuth.getInstance().getCurrentUser().getEmail());
-//                                        transfer.putExtra("post", store.postalCode);
                                         startActivity(transfer);
                                     }
                                 });

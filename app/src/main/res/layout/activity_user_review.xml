@@ -44,14 +44,6 @@
                     android:orientation="horizontal"
                     android:padding="10dp">
 
-                    <ImageView
-                        android:id="@+id/store_icon"
-                        android:layout_width="104dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="0dp"
-                        android:scaleType="centerInside"
-                        app:srcCompat="@drawable/edit" />
-
                     <LinearLayout
                         android:layout_width="240dp"
                         android:layout_height="wrap_content"
@@ -233,12 +225,17 @@
 
                     </com.google.android.material.textfield.TextInputLayout>
 
-<!--                    HEREEEEE  -->
-                    <Spinner
-                        android:id="@+id/time"
-                        android:layout_marginStart="10dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                    <com.travijuu.numberpicker.library.NumberPicker
+                        android:id="@+id/hour"
+                        android:layout_width="130dp"
+                        android:layout_height="40dp"
+                        numberpicker:focusable="false" />
+
+                    <com.travijuu.numberpicker.library.NumberPicker
+                        android:id="@+id/minute"
+                        android:layout_width="130dp"
+                        android:layout_height="40dp"
+                        numberpicker:focusable="false" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/submit"
