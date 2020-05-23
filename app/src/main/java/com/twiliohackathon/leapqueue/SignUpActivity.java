@@ -7,8 +7,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -20,39 +18,31 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-
+@SuppressWarnings("ConstantConditions")
 public class SignUpActivity extends AppCompatActivity {
-
     private static final String TAG = "SignUpActivity";
-
-    public TextInputLayout emailId, password, conf_password, fname, lname;
-    Button btnSignUp;
-    FirebaseAuth mFirebaseAuth;
+    public TextInputLayout emailId, password, conf_password, fName, lName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
-        this.mFirebaseAuth = FirebaseAuth.getInstance();
-
         this.emailId = findViewById(R.id.edit_email);
         this.password = findViewById(R.id.edit_password);
-        this.btnSignUp = findViewById(R.id.submit_signup_details);
         this.conf_password = findViewById(R.id.confirm_password);
+        this.fName = findViewById(R.id.edit_first_name);
+        this.lName = findViewById(R.id.edit_last_name);
 
-        this.fname = findViewById(R.id.edit_first_name);
-        this.lname = findViewById(R.id.edit_last_name);
-
-        this.btnSignUp.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.submit_signup_details).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String email = emailId.getEditText().getText().toString();
                 String pwd = password.getEditText().getText().toString();
                 String conf = conf_password.getEditText().getText().toString();
 
-                final String first = fname.getEditText().getText().toString();
-                final String last = lname.getEditText().getText().toString();
+                final String first = fName.getEditText().getText().toString();
+                final String last = lName.getEditText().getText().toString();
 
                 if (email.isEmpty() && pwd.isEmpty()) {
                     emailId.setError("An email is required");
@@ -68,34 +58,34 @@ public class SignUpActivity extends AppCompatActivity {
                 else if (pwd.isEmpty()) {
                     password.setError("A password is required");
                     password.requestFocus();
+                    conf_password.requestFocus();
                 }
                 else if (pwd.compareTo(conf) != 0) {
                     conf_password.setError("Password must match above field");
                     conf_password.requestFocus();
                 }
                 else if (first.isEmpty() && last.isEmpty()) {
-                    fname.setError("You need to specify a first name");
-                    fname.requestFocus();
-                    lname.setError("You need to specify a last name");
-                    lname.requestFocus();
+                    fName.setError("You need to specify a first name");
+                    fName.requestFocus();
+                    lName.setError("You need to specify a last name");
+                    lName.requestFocus();
                 }
                 else if (first.isEmpty()) {
-                    fname.setError("You need to specify a first name");
-                    fname.requestFocus();
+                    fName.setError("You need to specify a first name");
+                    fName.requestFocus();
                 }
                 else if (last.isEmpty()) {
-                    lname.setError("You need to specify a last name");
-                    lname.requestFocus();
+                    lName.setError("You need to specify a last name");
+                    lName.requestFocus();
                 }
                 else {
-                    mFirebaseAuth.createUserWithEmailAndPassword(email, pwd).addOnCompleteListener(SignUpActivity.this, new OnCompleteListener<AuthResult>() {
+                    FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, pwd).addOnCompleteListener(SignUpActivity.this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(!task.isSuccessful()){
                                 Toast.makeText(SignUpActivity.this,"Sign-up failed, please retry.", Toast.LENGTH_SHORT).show();
-                            }
-                            else {
-                                FirebaseUser user = mFirebaseAuth.getCurrentUser();
+                            } else {
+                                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                                 assert user != null;
                                 user.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
