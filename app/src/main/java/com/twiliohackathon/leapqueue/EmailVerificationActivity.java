@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+@SuppressWarnings("ConstantConditions")
 public class EmailVerificationActivity extends AppCompatActivity {
 
     private static final String TAG = "EmailVerificationActivity";
@@ -42,10 +43,9 @@ public class EmailVerificationActivity extends AppCompatActivity {
         this.mfirebaseAuth = FirebaseAuth.getInstance();
         this.user = mfirebaseAuth.getCurrentUser();
 
-        Bundle userData = getIntent().getExtras();
-        if (userData != null) {
-            this.fname = userData.getString("f_name");
-            this.lname = userData.getString("l_name");
+        final Bundle userData = getIntent().getExtras();
+        if (userData == null) {
+            System.exit(-1);
         }
 
         this.resend.setOnClickListener(new View.OnClickListener() {
@@ -117,35 +117,36 @@ public class EmailVerificationActivity extends AppCompatActivity {
                     dialog.show();
                 }
                 else {
-                    createDocument();
+                    createDocument(userData.getString("f_name"), userData.getString("l_name"));
 
                     Intent transfer = new Intent(EmailVerificationActivity.this, LoggedInActivity.class);
-                    transfer.putExtra("f_name", fname);
-                    transfer.putExtra("l_name", lname);
-                    startActivity(transfer);
+                    transfer.putExtra("f_name", userData.getString("f_name"));
+                    transfer.putExtra("l_name", userData.getString("l_name"));
 
+                    startActivity(transfer);
                     finish();
                 }
             }
         });
   }
 
-    public void createDocument() {
+    public void createDocument(String firstName, String lastName) {
         Map<String, Object> document = new HashMap<>();
         document.put("first_name", fname);
         document.put("last_name", lname);
 
         this.mFirestore.collection("Users").document(Objects.requireNonNull(user.getEmail()))
-                .set(document).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                Log.d(TAG, "User successfully added to the Firestore");
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.e(TAG, "User could not be added to the Firestore" + e.getMessage());
-            }
-        });
+                .set(document)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "User successfully added to the Firestore");
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e(TAG, "User could not be added to the Firestore" + e.getMessage());
+                    }
+                });
     }
 }

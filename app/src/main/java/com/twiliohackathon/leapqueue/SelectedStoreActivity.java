@@ -329,6 +329,7 @@ public class SelectedStoreActivity extends AppCompatActivity {
         staffEff.addView(staffText);
         staffEff.addView(staff);
 
+
         userCard.addView(dateVisit);
         userCard.addView(queueTime);
         userCard.addView(itemAvail);
@@ -337,21 +338,15 @@ public class SelectedStoreActivity extends AppCompatActivity {
 
     public LinearLayout createLayout(boolean vertical) {
         LinearLayout layout = new LinearLayout(SelectedStoreActivity.this);
-
-        if (vertical) {
-            layout.setOrientation(LinearLayout.VERTICAL);
-        }
-        else {
-            layout.setOrientation(LinearLayout.HORIZONTAL);
-        }
+        layout.setOrientation(vertical ? LinearLayout.VERTICAL : LinearLayout.HORIZONTAL);
 
         return layout;
     }
 
     public TextView createText(String text) {
         TextView view = new TextView(SelectedStoreActivity.this);
-        view.setText(text);
 
+        view.setText(text);
         view.setTypeface(null, Typeface.BOLD);
         view.setTextAppearance(SelectedStoreActivity.this, R.style.TextAppearance_MaterialComponents_Body2);
         view.setPadding(0, 0, 0, 10);

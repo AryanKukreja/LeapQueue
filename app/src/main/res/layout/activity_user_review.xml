@@ -53,7 +53,7 @@
                         app:srcCompat="@drawable/edit" />
 
                     <LinearLayout
-                        android:layout_width="171dp"
+                        android:layout_width="240dp"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
 
