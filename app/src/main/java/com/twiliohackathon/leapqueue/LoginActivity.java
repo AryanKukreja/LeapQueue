@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -19,8 +18,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+@SuppressWarnings("ConstantConditions")
 public class LoginActivity extends AppCompatActivity {
-
     public TextInputLayout emailId, password;
     Button btnSignIn, btnForgotPw;
     FirebaseAuth mFirebaseAuth;
@@ -66,31 +65,16 @@ public class LoginActivity extends AppCompatActivity {
                                 Toast.makeText(LoginActivity.this,"Log-in failed, please retry.", Toast.LENGTH_SHORT).show();
                             }
                             else {
-                                FirebaseUser user = mFirebaseAuth.getCurrentUser();
-                                assert user != null;
-                                if (!user.isEmailVerified()) {
-                                    AlertDialog.Builder alert = new AlertDialog.Builder(LoginActivity.this);
-
-                                    alert.setMessage("Your account has not been verified. Verify it and then click \"Continue\", or request a email re-send below");
-                                    alert.setTitle("Account Not Verified");
-
-                                    alert.setNegativeButton("Close", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            dialog.cancel();
-                                        }
-                                    });
-
-                                    AlertDialog dialog = alert.create();
-                                    dialog.show();
+                                if (!mFirebaseAuth.getCurrentUser().isEmailVerified()) {
+                                    createAlert("Account Not Verified",
+                                            "Your account has not been verified. Verify it and then click \"Continue\", or request a email re-send below");
 
                                     startActivity(new Intent(LoginActivity.this, EmailVerificationActivity.class));
-                                    finish();
                                 }
                                 else {
                                     startActivity(new Intent(LoginActivity.this, LoggedInActivity.class));
-                                    finish();
                                 }
+                                finish();
                             }
                         }
                     });

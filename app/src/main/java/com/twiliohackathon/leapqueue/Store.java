@@ -26,14 +26,20 @@ public class Store implements Parcelable {
 
     String storeName, postalCode, address, website, type;
 
-    public Store() { }
-
     public Store(Parcel in) {
-        storeName = in.readString();
-        postalCode = in.readString();
-        address = in.readString();
-        website = in.readString();
-        type = in.readString();
+        this.storeName = in.readString();
+        this.postalCode = in.readString();
+        this.address = in.readString();
+        this.website = in.readString();
+        this.type = in.readString();
+    }
+
+    public Store(String name, String type, String website, String address, String postalCode) {
+        this.storeName = name;
+        this.type = type;
+        this.website = website;
+        this.address = address;
+        this.postalCode = postalCode;
     }
 
     public static final Creator<Store> CREATOR = new Creator<Store>() {

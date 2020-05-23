@@ -7,8 +7,6 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -24,32 +22,26 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+@SuppressWarnings("ConstantConditions")
 public class SearchQueryActivity extends AppCompatActivity {
 
-    Button search;
-    TextInputLayout name, location;
-
     private RequestQueue mQueue;
-
-    private String key = "AjqfThnMDUJgbjMLKkOmbp0F8W73H4VG1P-Njsjy5nbXMIH84whR55Jb1HrOdzSQ";
-    String baseUrl = "https://dev.virtualearth.net/REST/v1/LocalSearch/";
+    private final String baseUrl = "https://dev.virtualearth.net/REST/v1/LocalSearch/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_query);
 
-        this.name = findViewById(R.id.store_name);
-        this.location = findViewById(R.id.location);
-        this.search = findViewById(R.id.search_stores);
-
         mQueue = Volley.newRequestQueue(this);
 
-        this.search.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.search_stores).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String url = buildUrl(baseUrl, name.getEditText().getText().toString(), location.getEditText().getText().toString(), key);
-                JsonParse(url);
+                JsonParse(buildUrl(baseUrl,
+                    ((TextInputLayout) findViewById(R.id.store_name)).getEditText().getText().toString(),
+                    ((TextInputLayout) findViewById(R.id.location)).getEditText().getText().toString(), getResources().getString(R.string.BING_MAPS_KEY)
+                ));
             }
         });
     }
@@ -60,28 +52,24 @@ public class SearchQueryActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         ArrayList<Store> stores = new ArrayList<>();
-
                         try {
-                            JSONArray resourceSets = response.getJSONArray("resourceSets");
-                            JSONObject set = resourceSets.getJSONObject(0);
-                            JSONArray resources = set.getJSONArray("resources");
+                            JSONArray resources = response.getJSONArray("resourceSets")
+                                    .getJSONObject(0)
+                                    .getJSONArray("resources");
 
                             for (int i = 0; i < resources.length(); i++) {
-                                Store tempStore = new Store();
-
                                 JSONObject store = resources.getJSONObject(i);
-                                tempStore.setStoreName(store.getString("name"));
-                                tempStore.setWebsite(store.getString("Website"));
-                                tempStore.setType(store.getString("entityType"));
-
                                 JSONObject address = store.getJSONObject("Address");
-                                tempStore.setAddress(address.getString("formattedAddress"));
-                                tempStore.setPostalCode(address.getString("postalCode"));
 
-                                stores.add(tempStore);
+                                stores.add(
+                                        new Store(store.getString("name"),
+                                                store.getString("entityType"),
+                                                store.getString("Website"),
+                                                address.getString("formattedAddress"),
+                                                address.getString("postalCode"))
+                                );
                             }
-                        }
-                        catch (Exception e) {
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
 
@@ -89,8 +77,7 @@ public class SearchQueryActivity extends AppCompatActivity {
                             Intent transfer = new Intent(SearchQueryActivity.this, ListResultsActivity.class);
                             transfer.putExtra("stores", stores);
                             startActivity(transfer);
-                        }
-                        else {
+                        } else {
                             Toast.makeText(SearchQueryActivity.this, "No stores found. Try to refine your location specified (only mention the town-name", Toast.LENGTH_LONG).show();
                         }
                     }
@@ -100,14 +87,11 @@ public class SearchQueryActivity extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         error.printStackTrace();
                     }
-        });
-
+                });
         this.mQueue.add(request);
     }
 
     public String buildUrl(String baseUrl, String store, String town, String key) {
-        String x = baseUrl + "?query=" + TextUtils.join("%20", store.split(" ")) + "%20" + TextUtils.join("%20", town.split(" ")) + "&key=" + key;
-        System.out.println(x);
-        return x;
+        return baseUrl + "?query=" + TextUtils.join("%20", store.split(" ")) + "%20" + TextUtils.join("%20", town.split(" ")) + "&key=" + key;
     }
 }
