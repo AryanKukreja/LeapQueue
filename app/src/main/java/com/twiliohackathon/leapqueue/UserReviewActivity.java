@@ -7,7 +7,6 @@ import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.RatingBar;
@@ -47,7 +46,6 @@ public class UserReviewActivity extends AppCompatActivity {
 
     MaterialButton delete, submit;
     TextInputEditText date;
-    Spinner time;
     Date dateVal;
 
     FirebaseFirestore store;
@@ -73,25 +71,13 @@ public class UserReviewActivity extends AppCompatActivity {
         queue.setUnit(4);
         queue.setValue(1);
 
+        this.hour = findViewById(R.id.hour);
+        set(1, 12, 1, 1, this.hour);
+
+        this.minute = findViewById(R.id.minute);
+        set(45, 0, 15, 0, this.minute);
+
         date = findViewById(R.id.date);
-        time = findViewById(R.id.time);
-
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.time_ranges, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        time.setAdapter(adapter);
-
-        time.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Log.e("Yassssssssssssssssssssssssss", "Thi was chosen: " + parent.getItemAtPosition(position));
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                Log.e("Yassssssssssssssssssssssssss", "Nothing was chosen");
-            }
-        });
-
         date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -130,8 +116,8 @@ public class UserReviewActivity extends AppCompatActivity {
 
                 Calendar queueDateCal = Calendar.getInstance();
                 queueDateCal.setTime(dateVal);
-                String datee = queueDateCal.get(Calendar.DAY_OF_MONTH) + "/" + (queueDateCal.get(Calendar.MONTH) + 1) + "/" + queueDateCal.get(Calendar.YEAR);
-                this.date.setText(datee);
+                String dateString = queueDateCal.get(Calendar.DAY_OF_MONTH) + "/" + (queueDateCal.get(Calendar.MONTH) + 1) + "/" + queueDateCal.get(Calendar.YEAR);
+                this.date.setText(dateString);
 
                 this.submit.setText(R.string.update);
 
@@ -154,7 +140,7 @@ public class UserReviewActivity extends AppCompatActivity {
                                                         @Override
                                                         public void onComplete(@NonNull Task<Void> task) {
                                                             if (task.isSuccessful()) {
-                                                                Toast.makeText(UserReviewActivity.this, "Your review has been deleted. Go back to the last page", Toast.LENGTH_LONG).show();
+                                                                finish();
                                                             }
                                                             else {
                                                                 Toast.makeText(UserReviewActivity.this, "Error: " + task.getException(), Toast.LENGTH_LONG).show();
@@ -184,15 +170,14 @@ public class UserReviewActivity extends AppCompatActivity {
                     dbData.put("staff_efficiency", staff.getRating());
 
                     try {
-                        Date fuck = new SimpleDateFormat("dd/MM/yyyy").parse(date.getText().toString());
-                        dbData.put("date", new Timestamp(fuck.getTime()));
-                        Log.e("FFFFF", dbData.get("date").toString());
+                        Date visitDate = new SimpleDateFormat("dd/MM/yyyy").parse(date.getText().toString());
+                        dbData.put("date", new Timestamp(visitDate.getTime()));
+                        Log.e("UserReviewActivity", dbData.get("date").toString());
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
 
                     final Map<String, Object> dbData2 = dbData;
-
                     store.collection("Reviews")
                             .whereEqualTo("email", bundle.getString("email"))
                             .whereEqualTo("postal", Integer.parseInt(Objects.requireNonNull(bundle.getString("postal"))))
@@ -240,5 +225,12 @@ public class UserReviewActivity extends AppCompatActivity {
         else {
             Log.e("UserReviewActivity", "Something went wrong");
         }
+    }
+
+    public void set(int max, int min, int unit, int value, NumberPicker picker) {
+        picker.setMax(max);
+        picker.setMin(min);
+        picker.setUnit(unit);
+        picker.setValue(value);
     }
 }

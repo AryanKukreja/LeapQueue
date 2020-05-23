@@ -23,7 +23,6 @@ public class LoginActivity extends AppCompatActivity {
     public TextInputLayout emailId, password;
     Button btnSignIn, btnForgotPw;
     FirebaseAuth mFirebaseAuth;
-//    private FirebaseAuth.AuthStateListener mAuthStateListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,21 +42,7 @@ public class LoginActivity extends AppCompatActivity {
                 String email = emailId.getEditText().getText().toString();
                 String pwd = password.getEditText().getText().toString();
 
-                if (email.isEmpty() && pwd.isEmpty()) {
-                    emailId.setError("An email is required");
-                    password.setError("A password is required");
-                    emailId.requestFocus();
-                    password.requestFocus();
-                }
-                else if (email.isEmpty()) {
-                    emailId.setError("An email is required");
-                    emailId.requestFocus();
-                }
-                else if (pwd.isEmpty()) {
-                    password.setError("A password is required");
-                    password.requestFocus();
-                }
-                else {
+                if (!email.isEmpty() && !pwd.isEmpty()) {
                     mFirebaseAuth.signInWithEmailAndPassword(email, pwd).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
@@ -79,6 +64,16 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     });
                 }
+                else {
+                    if (email.isEmpty()) {
+                        emailId.setError("An email is required");
+                        emailId.requestFocus();
+                    }
+                    if (pwd.isEmpty()) {
+                        password.setError("A password is required");
+                        password.requestFocus();
+                    }
+                }
             }
         });
 
@@ -93,6 +88,20 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-//        mFirebaseAuth.addAuthStateListener(mAuthStateListener);
+    }
+
+    public void createAlert(String title, String msg) {
+        AlertDialog.Builder alert = new AlertDialog.Builder(LoginActivity.this);
+
+        alert.setMessage(msg);
+        alert.setTitle(title);
+        alert.setNegativeButton("Close", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        alert.create().show();
     }
 }

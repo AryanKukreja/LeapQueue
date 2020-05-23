@@ -148,7 +148,16 @@ public class SelectedStoreActivity extends AppCompatActivity {
             queueDateCal.setTime(review.dateDate);
 
             review.date = queueDateCal.get(Calendar.DAY_OF_MONTH) + "/" + (queueDateCal.get(Calendar.MONTH) + 1) + "/" + queueDateCal.get(Calendar.YEAR);
-            review.dateDate = date;
+
+            if (queueDateCal.get(Calendar.HOUR) > 12) {
+                review.hour = queueDateCal.get(Calendar.HOUR) - 12;
+                review.am = false;
+            }
+            else {
+                review.hour = queueDateCal.get(Calendar.HOUR);
+                review.am = true;
+            }
+            review.minute = queueDateCal.get(Calendar.MINUTE);
         }
 
         if (hash.get("email").toString().equals(user.getEmail())) {
@@ -228,7 +237,10 @@ public class SelectedStoreActivity extends AppCompatActivity {
                 transfer.putExtra("datee", review.dateDate.toString());
                 transfer.putExtra("reviewPresent", true);
                 transfer.putExtra("email", email);
-                transfer.putExtra("post", post);
+                transfer.putExtra("postal", post);
+                transfer.putExtra("hr", review.hour);
+                transfer.putExtra("min", review.minute);
+                transfer.putExtra("am", review.am);
 
                 startActivity(transfer);
             }

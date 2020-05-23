@@ -21,7 +21,7 @@ import java.util.ArrayList;
 public class ListResultsActivity extends AppCompatActivity {
 
     ArrayList<Store> stores;
-    LinearLayout container;
+    LinearLayout resultsContainer;
     ViewGroup.LayoutParams params;
 
     final static int TITLE = 0;
@@ -33,24 +33,20 @@ public class ListResultsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_results);
 
-        this.container = findViewById(R.id.results_container);
+        this.resultsContainer = findViewById(R.id.results_container);
         this.params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
 
         Bundle userData = getIntent().getExtras();
         if (userData != null) {
             this.stores = getIntent().getParcelableArrayListExtra("stores");
-
-            if (stores.size() == 0) {
+            if (this.stores.size() == 0) {
                 Log.e("ListResultsActivity", "No stores found");
             }
         }
-        else {
-            Log.e("ListResultsActivity", "It failed bossssss");
-            System.exit(-1);
-        }
+        else System.exit(-1);
 
-        for (int i = 0; i < stores.size(); i++) {
-            this.addStoreToView(stores.get(i));
+        for (Store store : this.stores) {
+            this.addStoreToView(store);
         }
     }
 
@@ -66,8 +62,6 @@ public class ListResultsActivity extends AppCompatActivity {
         final String storePostal = store.postalCode;
 
         MaterialButton linkButton = createButton("Visit Website");
-        MaterialButton chooseStoreButton = createButton("Pick Store");
-
         linkButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,6 +71,7 @@ public class ListResultsActivity extends AppCompatActivity {
             }
         });
 
+        MaterialButton chooseStoreButton = createButton("Pick Store");
         chooseStoreButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -90,22 +85,17 @@ public class ListResultsActivity extends AppCompatActivity {
             }
         });
 
-        MaterialCardView card = createCard();
-        LinearLayout layout = createLinLay(10, true);
+        LinearLayout shopData = createLinLay(10, true);
+        shopData.addView(name);
+        shopData.addView(type);
+        shopData.addView(address);
+        shopData.addView(chooseStoreButton);
 
-        layout.addView(name);
-        layout.addView(type);
-        layout.addView(address);
+        MaterialCardView shopCard = createCard();
+        shopCard.addView(shopData);
+        shopCard.setBottom(20);
 
-        LinearLayout buttonLayout = createLinLay(10, true);
-        buttonLayout.addView(chooseStoreButton);
-
-        layout.addView(buttonLayout);
-
-        card.addView(layout);
-        card.setBottom(20);
-
-        this.container.addView(card);
+        this.resultsContainer.addView(shopCard);
     }
 
     public MaterialButton createButton(String textField) {
@@ -154,15 +144,9 @@ public class ListResultsActivity extends AppCompatActivity {
 
     public LinearLayout createLinLay(int pad, boolean vertical) {
         LinearLayout layout = new LinearLayout(ListResultsActivity.this);
+
         layout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
-
-        if (vertical) {
-            layout.setOrientation(LinearLayout.VERTICAL);
-        }
-        else {
-            layout.setOrientation(LinearLayout.HORIZONTAL);
-        }
-
+        layout.setOrientation(vertical ? LinearLayout.VERTICAL : LinearLayout.HORIZONTAL);
         layout.setPadding(pad, pad, pad, pad);
 
         return layout;

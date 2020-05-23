@@ -34,8 +34,6 @@ public class LoggedInActivity extends AppCompatActivity {
         setContentView(R.layout.activity_logged_in);
 
         this.welcome = findViewById(R.id.welcome_msg);
-
-//        this.logout  = findViewById(R.id.logout);
         this.logout = findViewById(R.id.logout);
         this.search  = findViewById(R.id.search_store_card);
 
