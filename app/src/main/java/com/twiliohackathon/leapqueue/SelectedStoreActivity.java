@@ -169,7 +169,7 @@ public class SelectedStoreActivity extends AppCompatActivity {
         );
         wrap_content_params.setMargins(0, 0, 0, 60);
 
-        TextView dateVisit = createText("Date Visited: " + "  " + review.date, Typeface.BOLD);
+        TextView dateVisit = createText("Date Visited: " + "  " + review.date + " at " + review.hour + ":" + (review.minute < 10 ? "0" + review.minute : (review.minute == 0 ? "00" : review.minute)) + (review.am ? " AM" : "PM"), Typeface.BOLD);
         dateVisit.setLayoutParams(wrap_content_params);
 
         View v = new View(this);
@@ -222,13 +222,9 @@ public class SelectedStoreActivity extends AppCompatActivity {
                 transfer.putExtra("name", name);
                 transfer.putExtra("address", addr);
                 transfer.putExtra("date", review.dateDate);
-                transfer.putExtra("datee", review.dateDate.toString());
                 transfer.putExtra("reviewPresent", true);
                 transfer.putExtra("email", email);
                 transfer.putExtra("postal", post);
-                transfer.putExtra("hr", review.hour);
-                transfer.putExtra("min", review.minute);
-                transfer.putExtra("am", review.am);
 
                 startActivity(transfer);
             }
@@ -241,7 +237,7 @@ public class SelectedStoreActivity extends AppCompatActivity {
         staffEff.addView(createText(getResources().getString(R.string.staff_eff) + "   ", Typeface.BOLD));
         staffEff.addView(createRatingBar(review.staffEff.floatValue(), true));
 
-        userCard.addView(createText("Date Visited: " + "  " + review.date, Typeface.BOLD));
+        userCard.addView(createText("Date Visited: " + "  " + review.date + " at " + review.hour + ":" + (review.minute < 10 ? "0" + review.minute : (review.minute == 0 ? "00" : review.minute)) + (review.am ? " AM" : "PM"), Typeface.BOLD));
         userCard.addView(queueTime);
         userCard.addView(itemAvail);
         userCard.addView(staffEff);

@@ -5,12 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -26,8 +28,6 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.travijuu.numberpicker.library.NumberPicker;
 
 import java.sql.Timestamp;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -35,14 +35,17 @@ import java.util.Map;
 import java.util.Objects;
 
 @SuppressWarnings("ConstantConditions")
-@SuppressLint("SimpleDateFormat")
+@SuppressLint({"SimpleDateFormat", "SetTextI18n"})
 public class UserReviewActivity extends AppCompatActivity {
     RatingBar item, staff;
-    TextInputEditText comments, date;
-    NumberPicker queue, hour, minute;
+    TextInputEditText comments, date, time;
+    NumberPicker queue;
 
-    DatePickerDialog picker;
+    DatePickerDialog datePicker;
+    TimePickerDialog timePicker;
     Date dateVal;
+
+    Calendar queueDateCal = Calendar.getInstance();
 
     MaterialButton delete, submit;
 
@@ -68,26 +71,39 @@ public class UserReviewActivity extends AppCompatActivity {
         queue.setUnit(4);
         queue.setValue(1);
 
-        this.hour = findViewById(R.id.hour);
-        set(1, 12, 1, 1, this.hour);
-
-        this.minute = findViewById(R.id.minute);
-        set(45, 0, 15, 0, this.minute);
-
         date = findViewById(R.id.date);
         date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final Calendar cal = Calendar.getInstance();
-                picker = new DatePickerDialog(UserReviewActivity.this,
+                datePicker = new DatePickerDialog(UserReviewActivity.this,
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                                String output = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year;
-                                date.setText(output);
+                                date.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
+                                queueDateCal.set(Calendar.YEAR, year);
+                                queueDateCal.set(Calendar.MONTH, monthOfYear);
+                                queueDateCal.set(Calendar.DAY_OF_MONTH, dayOfMonth);
                             }
                         }, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
-                picker.show();
+                datePicker.show();
+            }
+        });
+
+        this.time = findViewById(R.id.time);
+        this.time.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                timePicker = new TimePickerDialog(UserReviewActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        time.setText((hourOfDay > 12 ? hourOfDay - 12 : hourOfDay )+ ":" + (minute > 10 ? minute : (minute == 0 ? "00" : "0" + minute)) + (hourOfDay > 12 ? " PM" : " AM"));
+                        queueDateCal.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                        queueDateCal.set(Calendar.MINUTE, minute);
+                    }
+                }, 0, 0, false);
+
+                timePicker.show();
             }
         });
 
@@ -107,10 +123,10 @@ public class UserReviewActivity extends AppCompatActivity {
                 this.comments.setText(bundle.getString("com"));
                 this.dateVal = (Date) bundle.get("date");
 
-                Calendar queueDateCal = Calendar.getInstance();
+                queueDateCal = Calendar.getInstance();
                 queueDateCal.setTime(dateVal);
-                String dateString = queueDateCal.get(Calendar.DAY_OF_MONTH) + "/" + (queueDateCal.get(Calendar.MONTH) + 1) + "/" + queueDateCal.get(Calendar.YEAR);
-                this.date.setText(dateString);
+                this.date.setText(queueDateCal.get(Calendar.DAY_OF_MONTH) + "/" + (queueDateCal.get(Calendar.MONTH) + 1) + "/" + queueDateCal.get(Calendar.YEAR));
+                this.time.setText(queueDateCal.get(Calendar.HOUR_OF_DAY) + ":" + (queueDateCal.get(Calendar.MINUTE) < 10 ? "0" + queueDateCal.get(Calendar.MINUTE) : (queueDateCal.get(Calendar.MINUTE) == 0 ? "00" : queueDateCal.get(Calendar.MINUTE))) + (queueDateCal.get(Calendar.AM_PM) == Calendar.AM ? " AM" : " PM"));
 
                 this.submit.setText(R.string.update);
 
@@ -159,14 +175,7 @@ public class UserReviewActivity extends AppCompatActivity {
                     dbData.put("item_availability", item.getRating());
                     dbData.put("queue_time", String.valueOf(queue.getValue()));
                     dbData.put("staff_efficiency", staff.getRating());
-
-                    try {
-                        Date visitDate = new SimpleDateFormat("dd/MM/yyyy").parse(date.getText().toString());
-                        dbData.put("date", new Timestamp(visitDate.getTime()));
-                        Log.e("UserReviewActivity", dbData.get("date").toString());
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
+                    dbData.put("date", new Timestamp(queueDateCal.getTimeInMillis()));
 
                     final Map<String, Object> dbData2 = dbData;
                     store.collection("Reviews")
@@ -212,12 +221,5 @@ public class UserReviewActivity extends AppCompatActivity {
         }  else {
             Log.e("UserReviewActivity", "Something went wrong");
         }
-    }
-
-    public void set(int max, int min, int unit, int value, NumberPicker picker) {
-        picker.setMax(max);
-        picker.setMin(min);
-        picker.setUnit(unit);
-        picker.setValue(value);
     }
 }
