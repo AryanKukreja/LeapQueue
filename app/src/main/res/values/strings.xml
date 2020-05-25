@@ -53,8 +53,9 @@
     <string name="edit_review">Edit Your Review</string>
     <string name="comments">Comments</string>
     <string name="enter_comments">Enter Comments Here</string>
-    <string name="date">Visit Date</string>
-    <string name="time">Visit Time</string>
+    <string name="visit_date_and_time">Visit Date and Time</string>
+    <string name="date">Date</string>
+    <string name="time">Time</string>
     <string name="update">Update</string>
     <string name="sub">Submit</string>
     <string name="plus">+</string>

@@ -7,15 +7,15 @@
     android:background="@drawable/scrollview_background">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:orientation="vertical">
 
         <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_height="match_parent"
+        android:layout_marginTop="25dp"
         android:orientation="horizontal">
 
         <com.google.android.material.card.MaterialCardView
@@ -31,18 +31,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="10dp">
+                android:paddingTop="10dp">
 
                 <ImageView
                     android:id="@+id/store_icon"
-                    android:layout_width="104dp"
-                    android:layout_height="match_parent"
+                    android:layout_width="105dp"
+                    android:layout_height="157dp"
                     android:layout_marginStart="0dp"
                     android:scaleType="centerInside"
                     app:srcCompat="@drawable/shop" />
 
                 <LinearLayout
-                    android:layout_width="171dp"
+                    android:layout_width="190dp"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
@@ -59,18 +59,18 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
-                        android:textColor="@color/grey"
                         android:text="@string/search"
-                        android:textAppearance="?attr/textAppearanceBody1" />
+                        android:textAppearance="?attr/textAppearanceBody1"
+                        android:textColor="@color/grey" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/web"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginStart="10dp"
-                        android:layout_marginEnd="10dp"
                         android:layout_marginTop="5dp"
-                        android:text="@string/website"/>
+                        android:layout_marginEnd="10dp"
+                        android:text="@string/website" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/refresh"
@@ -94,7 +94,7 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="300dp"
                 android:id="@+id/search_store_card"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginStart="35dp"
                 android:layout_marginEnd="25dp"
                 android:foregroundGravity="center"
@@ -110,9 +110,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginStart="10dp"
+                        android:gravity="center"
                         android:text="@string/rating"
-                        android:textStyle="bold"
-                        android:textAppearance="?attr/textAppearanceSearchResultTitle"/>
+                        android:textAppearance="?attr/textAppearanceSearchResultTitle"
+                        android:textStyle="bold" />
 
                     <LinearLayout
                         android:id="@+id/queue_time"
@@ -123,7 +124,6 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_marginStart="10dp"
                             android:text="@string/queue_time"
                             android:textAppearance="?attr/textAppearanceBody2"/>
                     </LinearLayout>
@@ -137,7 +137,6 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_marginStart="10dp"
                             android:text="@string/item_avail"
                             android:textAppearance="?attr/textAppearanceBody2"/>
                     </LinearLayout>
@@ -151,7 +150,6 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_marginStart="10dp"
                             android:text="@string/staff_eff"
                             android:textAppearance="?attr/textAppearanceBody2"/>
                     </LinearLayout>
@@ -174,7 +172,7 @@
             app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MaterialCardView.Cut">
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/outer_one"
                 android:orientation="vertical">
@@ -221,12 +219,12 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="12dp"
-        android:layout_marginLeft="35dp"
-        android:layout_marginRight="35dp"
+        android:layout_marginStart="35dp"
+        android:layout_marginEnd="25dp"
         android:id="@+id/reviews_container"
         android:orientation="vertical"
         android:padding="10dp"

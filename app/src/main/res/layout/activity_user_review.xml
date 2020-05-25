@@ -7,26 +7,16 @@
     android:background="@drawable/scrollview_background">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:orientation="vertical">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="40dp"
-            android:gravity="center"
-            android:id="@+id/review_title"
-            android:text="@string/your_review"
-            android:textAppearance="?attr/textAppearanceHeadline4"
-            android:textColor="@color/white"
-            android:textStyle="bold"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
             android:orientation="horizontal">
 
             <com.google.android.material.card.MaterialCardView
@@ -36,7 +26,7 @@
                 android:layout_marginStart="35dp"
                 android:layout_marginEnd="25dp"
                 android:foregroundGravity="center"
-                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MaterialCardView.TopHalfCut">
+                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MaterialCardView.Cut">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -45,13 +35,13 @@
                     android:padding="10dp">
 
                     <LinearLayout
-                        android:layout_width="240dp"
+                        android:layout_width="300dp"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
 
                         <TextView
                             android:id="@+id/name"
-                            android:layout_width="wrap_content"
+                            android:layout_width="312dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
                             android:text="@string/find_store"
@@ -59,7 +49,7 @@
 
                         <TextView
                             android:id="@+id/address"
-                            android:layout_width="wrap_content"
+                            android:layout_width="308dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
                             android:text="@string/search"
@@ -75,7 +65,7 @@
                             android:layout_marginEnd="10dp"
                             android:layout_marginBottom="15dp"
                             android:text="@string/del_review"
-                            android:visibility="gone"/>
+                            android:visibility="gone" />
 
                     </LinearLayout>
                 </LinearLayout>
@@ -96,7 +86,7 @@
                 android:layout_marginStart="35dp"
                 android:layout_marginEnd="25dp"
                 android:foregroundGravity="center"
-                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MaterialCardView.BottomHalfCut">
+                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MaterialCardView.Cut">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -123,18 +113,16 @@
                         android:textAppearance="?attr/textAppearanceHeadline6" />
 
                     <LinearLayout
-                        xmlns:tools="http://schemas.android.com/tools"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical"
-                        xmlns:numberpicker="http://schemas.android.com/apk/res-auto"
-                        tools:context="com.travijuu.numberpicker.sample.MainActivity">
+                        numberpicker:context="com.travijuu.numberpicker.sample.MainActivity">
 
                         <com.travijuu.numberpicker.library.NumberPicker
                             android:id="@+id/queue"
                             android:layout_width="130dp"
                             android:layout_height="40dp"
-                            numberpicker:focusable="false" />
+                            app:focusable="false" />
 
                     </LinearLayout>
 
@@ -148,9 +136,9 @@
                         android:textAppearance="?attr/textAppearanceHeadline6" />
 
                     <RatingBar
+                        android:id="@+id/item"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/item"
                         android:numStars="5"
                         android:stepSize="0.5"
                         android:visibility="visible" />
@@ -208,34 +196,41 @@
                         android:textAppearance="?attr/textAppearanceHeadline6" />
 
 
-                    <com.google.android.material.textfield.TextInputLayout
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginEnd="30dp"
-                        android:layout_marginBottom="15dp"
-                        android:focusable="false"
-                        android:hint="@string/date">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/date"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="120dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginBottom="15dp"
                             android:focusable="false"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
+                            android:hint="@string/date">
 
-                    </com.google.android.material.textfield.TextInputLayout>
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/date"
+                                android:focusable="false"
+                                android:layout_width="140dp"
+                                android:layout_height="wrap_content" />
+                        </com.google.android.material.textfield.TextInputLayout>
 
-                    <com.travijuu.numberpicker.library.NumberPicker
-                        android:id="@+id/hour"
-                        android:layout_width="130dp"
-                        android:layout_height="40dp"
-                        numberpicker:focusable="false" />
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="120dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_marginBottom="15dp"
+                            android:focusable="false"
+                            android:hint="@string/time">
 
-                    <com.travijuu.numberpicker.library.NumberPicker
-                        android:id="@+id/minute"
-                        android:layout_width="130dp"
-                        android:layout_height="40dp"
-                        numberpicker:focusable="false" />
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/time"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:focusable="false" />
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </LinearLayout>
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/submit"
