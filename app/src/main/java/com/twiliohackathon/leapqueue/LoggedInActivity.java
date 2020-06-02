@@ -74,6 +74,13 @@ public class LoggedInActivity extends AppCompatActivity {
                 startActivity(new Intent(LoggedInActivity.this, SearchQueryActivity.class));
             }
         });
+
+        findViewById(R.id.about).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoggedInActivity.this, AboutPageActivity.class));
+            }
+        });
     }
 
     protected void checkUser() {

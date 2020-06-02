@@ -11,8 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Scratch">
-        </activity>
+        <activity android:name=".AboutPageActivity"></activity>
+        <activity android:name=".Scratch"></activity>
         <activity android:name=".UserReviewActivity" />
         <activity android:name=".SelectedStoreActivity" />
         <activity android:name=".ListResultsActivity" />

@@ -38,7 +38,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.2.0-alpha06'
     implementation files('libs/json-20190722.jar')
 
-    compile 'com.github.travijuu:numberpicker:1.0.7'
+    implementation 'com.github.travijuu:numberpicker:1.0.7'
 
 }
 apply plugin: 'com.android.application'
