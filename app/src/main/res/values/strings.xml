@@ -69,4 +69,15 @@
         <item>8pm - 12am</item>
         <item>12am - 5am</item>
     </string-array>
+
+    <string name="about_us">About Us</string>
+    <string name="google_form">Send feedback the team</string>
+    <string name="github_issue">Visit the Github Repository</string>
+    <string name="terms_and_cond">Terms and Conditions</string>
+    <string name="back_to_home">Back to Home</string>
+    <string name="about_data">
+        During Covid-19, reviews of stores and restaurants have become obsolete; they do not provide data on the store\'s performance during a pandemic.
+        \n\n
+        This app collects reviews that focus on a store\'s performance during a pandemic
+    </string>
 </resources>
