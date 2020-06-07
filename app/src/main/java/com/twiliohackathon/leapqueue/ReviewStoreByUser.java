@@ -36,7 +36,7 @@ import java.util.Objects;
 
 @SuppressWarnings("ConstantConditions")
 @SuppressLint({"SimpleDateFormat", "SetTextI18n"})
-public class UserReviewActivity extends AppCompatActivity {
+public class ReviewStoreByUser extends AppCompatActivity {
     RatingBar item, staff;
     TextInputEditText comments, date, time;
     NumberPicker queue;
@@ -55,7 +55,7 @@ public class UserReviewActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_review);
+        setContentView(R.layout.activity_review_store_by_user);
 
         this.store = FirebaseFirestore.getInstance();
 
@@ -77,7 +77,7 @@ public class UserReviewActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 final Calendar cal = Calendar.getInstance();
-                datePicker = new DatePickerDialog(UserReviewActivity.this,
+                datePicker = new DatePickerDialog(ReviewStoreByUser.this,
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
@@ -95,7 +95,7 @@ public class UserReviewActivity extends AppCompatActivity {
         this.time.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                timePicker = new TimePickerDialog(UserReviewActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                timePicker = new TimePickerDialog(ReviewStoreByUser.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         time.setText((hourOfDay > 12 ? hourOfDay - 12 : hourOfDay )+ ":" + (minute > 10 ? minute : (minute == 0 ? "00" : "0" + minute)) + (hourOfDay > 12 ? " PM" : " AM"));
@@ -152,7 +152,7 @@ public class UserReviewActivity extends AppCompatActivity {
                                                             if (task.isSuccessful()) {
                                                                 finish();
                                                             } else {
-                                                                Toast.makeText(UserReviewActivity.this, "Error: " + task.getException(), Toast.LENGTH_LONG).show();
+                                                                Toast.makeText(ReviewStoreByUser.this, "Error: " + task.getException(), Toast.LENGTH_LONG).show();
                                                             }
                                                         }
                                                     });
@@ -194,9 +194,9 @@ public class UserReviewActivity extends AppCompatActivity {
                                                     @Override
                                                     public void onComplete(@NonNull Task<Void> task) {
                                                         if (task.isSuccessful()) {
-                                                            Toast.makeText(UserReviewActivity.this, "Your update has been saved. Go back to the last page", Toast.LENGTH_LONG).show();
+                                                            Toast.makeText(ReviewStoreByUser.this, "Your update has been saved. Go back to the last page", Toast.LENGTH_LONG).show();
                                                         } else {
-                                                            Toast.makeText(UserReviewActivity.this, "Error: " + task.getException(), Toast.LENGTH_LONG).show();
+                                                            Toast.makeText(ReviewStoreByUser.this, "Error: " + task.getException(), Toast.LENGTH_LONG).show();
                                                         }
                                                     }
                                                 });
@@ -206,12 +206,12 @@ public class UserReviewActivity extends AppCompatActivity {
                                                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                                     @Override
                                                     public void onSuccess(DocumentReference documentReference) {
-                                                    Toast.makeText(UserReviewActivity.this, "Your update has been saved. Go back to the last page", Toast.LENGTH_LONG).show();
+                                                    Toast.makeText(ReviewStoreByUser.this, "Your update has been saved. Go back to the last page", Toast.LENGTH_LONG).show();
                                                     }
                                                 }).addOnFailureListener(new OnFailureListener() {
                                             @Override
                                             public void onFailure(@NonNull Exception e) {
-                                                    Toast.makeText(UserReviewActivity.this, "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                                                    Toast.makeText(ReviewStoreByUser.this, "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
                                             }
                                         });
                                     }

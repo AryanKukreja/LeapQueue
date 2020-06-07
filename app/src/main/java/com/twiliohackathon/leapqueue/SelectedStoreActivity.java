@@ -92,7 +92,7 @@ public class SelectedStoreActivity extends AppCompatActivity {
                                 findViewById(R.id.add_edit_delete).setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
-                                        Intent transfer = new Intent(SelectedStoreActivity.this, UserReviewActivity.class);
+                                        Intent transfer = new Intent(SelectedStoreActivity.this, ReviewStoreByUser.class);
                                         transfer.putExtra("reviewPresent", false);
                                         transfer.putExtras(userData);
                                         transfer.putExtra("email", FirebaseAuth.getInstance().getCurrentUser().getEmail());
@@ -214,7 +214,7 @@ public class SelectedStoreActivity extends AppCompatActivity {
         findViewById(R.id.add_edit_delete).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent transfer = new Intent(getBaseContext(), UserReviewActivity.class);
+                Intent transfer = new Intent(getBaseContext(), ReviewStoreByUser.class);
                 transfer.putExtra("qtm", queue);
                 transfer.putExtra("eff", eff);
                 transfer.putExtra("itm", itm);
