@@ -96,56 +96,75 @@ public class UserProfileActivity extends AppCompatActivity {
         findViewById(R.id.terminate_account).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FirebaseAuth.getInstance().getCurrentUser().delete()
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                store.collection("Users").document(displayEmail.getText().toString()).delete()
-                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void aVoid) {
-                                                store.collection("Reviews").whereEqualTo("email", displayEmail.getText().toString()).get()
-                                                        .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                                                            @Override
-                                                            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                                                                for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
-                                                                    store.collection("Reviews").document(doc.getId()).delete()
-                                                                            .addOnFailureListener(new OnFailureListener() {
-                                                                                @Override
-                                                                                public void onFailure(@NonNull Exception e) {
-                                                                                    e.printStackTrace();
-                                                                                }
-                                                                            });
-                                                                }
-                                                                Intent intent = new Intent(getApplicationContext(), WelcomePageActivity.class);
-                                                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                                                startActivity(intent);
-                                                            }
-                                                        }).addOnFailureListener(new OnFailureListener() {
+                AlertDialog.Builder alert = new AlertDialog.Builder(UserProfileActivity.this);
+
+                alert.setTitle("Delete Account?");
+                alert.setMessage("Are you sure you want to delete your entire account? Your profile, as well as your reviews, will be removed");
+                alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                alert.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        FirebaseAuth.getInstance().getCurrentUser().delete()
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        store.collection("Users").document(displayEmail.getText().toString()).delete()
+                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                     @Override
-                                                    public void onFailure(@NonNull Exception e) {
-                                                        e.printStackTrace();
+                                                    public void onSuccess(Void aVoid) {
+                                                        store.collection("Reviews").whereEqualTo("email", displayEmail.getText().toString()).get()
+                                                                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                                                    @Override
+                                                                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                                                        for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
+                                                                            store.collection("Reviews").document(doc.getId()).delete()
+                                                                                    .addOnFailureListener(new OnFailureListener() {
+                                                                                        @Override
+                                                                                        public void onFailure(@NonNull Exception e) {
+                                                                                            e.printStackTrace();
+                                                                                        }
+                                                                                    });
+                                                                        }
+                                                                        Intent intent = new Intent(getApplicationContext(), WelcomePageActivity.class);
+                                                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                                                        startActivity(intent);
+                                                                    }
+                                                                }).addOnFailureListener(new OnFailureListener() {
+                                                            @Override
+                                                            public void onFailure(@NonNull Exception e) {
+                                                                e.printStackTrace();
+                                                            }
+                                                        });
                                                     }
-                                                });
-                                            }
-                                        }).addOnFailureListener(new OnFailureListener() {
+                                                }).addOnFailureListener(new OnFailureListener() {
                                             @Override
                                             public void onFailure(@NonNull Exception e) {
                                                 e.printStackTrace();
                                             }
                                         });
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                e.printStackTrace();
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
                                 e.printStackTrace();
                             }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        e.printStackTrace();
+                        });
+
+                        dialog.cancel();
                     }
                 });
+
+                alert.create().show();
             }
         });
     }
