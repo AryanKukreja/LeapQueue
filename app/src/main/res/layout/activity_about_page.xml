@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    android:layout_height="match_parent"
+<ScrollView android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/scrollview_background">
 
     <LinearLayout
@@ -16,29 +16,29 @@
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="300dp"
-            android:layout_height="300dp">
+            android:layout_height="wrap_content">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingBottom="20dp">
 
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
+                    android:paddingHorizontal="15dp"
                     android:text="@string/about_us"
-                    android:textAlignment="center"
-                    android:textAppearance="?attr/textAppearanceHeadline3"
+                    android:textAppearance="?attr/textAppearanceHeadline4"
                     android:textStyle="bold"/>
 
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="15dp"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="8dp"
+                    android:paddingHorizontal="15dp"
                     android:text="@string/about_data"
-                    android:textAlignment="center"
                     android:textAppearance="?attr/textAppearanceBody1"/>
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
@@ -95,6 +95,7 @@
             android:layout_marginBottom="30dp"
             android:layout_height="60dp"
             android:id="@+id/goHome"
+            app:icon="@drawable/baseline_chevron_left_black_18dp"
             android:text="@string/back_to_home"/>
 
     </LinearLayout>
