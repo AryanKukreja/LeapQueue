@@ -28,6 +28,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.travijuu.numberpicker.library.NumberPicker;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -126,8 +127,9 @@ public class ReviewStoreByUser extends AppCompatActivity {
 
                 queueDateCal = Calendar.getInstance();
                 queueDateCal.setTime(dateVal);
-                this.date.setText(queueDateCal.get(Calendar.DAY_OF_MONTH) + "/" + (queueDateCal.get(Calendar.MONTH) + 1) + "/" + queueDateCal.get(Calendar.YEAR));
-                this.time.setText(queueDateCal.get(Calendar.HOUR_OF_DAY) + ":" + (queueDateCal.get(Calendar.MINUTE) < 10 ? "0" + queueDateCal.get(Calendar.MINUTE) : (queueDateCal.get(Calendar.MINUTE) == 0 ? "00" : queueDateCal.get(Calendar.MINUTE))) + (queueDateCal.get(Calendar.AM_PM) == Calendar.AM ? " AM" : " PM"));
+                this.date.setText((new SimpleDateFormat("d MMM, yyyy")).format(this.dateVal));
+//                this.date.setText(queueDateCal.get(Calendar.DAY_OF_MONTH) + "/" + (queueDateCal.get(Calendar.MONTH) + 1) + "/" + queueDateCal.get(Calendar.YEAR));
+                this.time.setText((queueDateCal.get(Calendar.HOUR_OF_DAY) % 12) + ":" + (queueDateCal.get(Calendar.MINUTE) < 10 ? "0" + queueDateCal.get(Calendar.MINUTE) : (queueDateCal.get(Calendar.MINUTE) == 0 ? "00" : queueDateCal.get(Calendar.MINUTE))) + (queueDateCal.get(Calendar.AM_PM) == Calendar.AM ? " AM" : " PM"));
 
                 this.submit.setText(R.string.update);
 
@@ -177,6 +179,8 @@ public class ReviewStoreByUser extends AppCompatActivity {
                     dbData.put("queue_time", String.valueOf(queue.getValue()));
                     dbData.put("staff_efficiency", staff.getRating());
                     dbData.put("date", new Timestamp(queueDateCal.getTimeInMillis()));
+                    dbData.put("down_votes", 0);
+                    dbData.put("up_votes", 0);
 
                     final Map<String, Object> dbData2 = dbData;
                     store.collection("Reviews")
@@ -196,7 +200,7 @@ public class ReviewStoreByUser extends AppCompatActivity {
                                                         if (task.isSuccessful()) {
                                                             Toast.makeText(ReviewStoreByUser.this, "Your update has been saved. Go back to the last page", Toast.LENGTH_LONG).show();
                                                         } else {
-                                                            Toast.makeText(ReviewStoreByUser.this, "Error: " + task.getException(), Toast.LENGTH_LONG).show();
+                                                            task.getException().printStackTrace();
                                                         }
                                                     }
                                                 });
@@ -211,7 +215,7 @@ public class ReviewStoreByUser extends AppCompatActivity {
                                                 }).addOnFailureListener(new OnFailureListener() {
                                             @Override
                                             public void onFailure(@NonNull Exception e) {
-                                                    Toast.makeText(ReviewStoreByUser.this, "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                                                    e.printStackTrace();
                                             }
                                         });
                                     }

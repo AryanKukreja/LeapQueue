@@ -27,6 +27,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Map;
 import java.util.Objects;
@@ -137,13 +138,13 @@ public class SelectedStoreActivity extends AppCompatActivity {
             Calendar queueDateCal = Calendar.getInstance();
             queueDateCal.setTime(review.dateDate);
 
-            review.date = queueDateCal.get(Calendar.DAY_OF_MONTH) + "/" + (queueDateCal.get(Calendar.MONTH) + 1) + "/" + queueDateCal.get(Calendar.YEAR);
-
-            if (queueDateCal.get(Calendar.HOUR) > 12) {
-                review.hour = queueDateCal.get(Calendar.HOUR) - 12;
+            review.date = (new SimpleDateFormat("d MMM, yyyy")).format(review.dateDate);
+//            review.date = queueDateCal.get(Calendar.DAY_OF_MONTH) + "/" + (queueDateCal.get(Calendar.MONTH) + 1) + "/" + queueDateCal.get(Calendar.YEAR);
+            if (queueDateCal.get(Calendar.HOUR_OF_DAY) > 12) {
+                review.hour = queueDateCal.get(Calendar.HOUR_OF_DAY) - 12;
                 review.am = false;
             }  else {
-                review.hour = queueDateCal.get(Calendar.HOUR);
+                review.hour = queueDateCal.get(Calendar.HOUR_OF_DAY);
                 review.am = true;
             }
             review.minute = queueDateCal.get(Calendar.MINUTE);
@@ -169,7 +170,7 @@ public class SelectedStoreActivity extends AppCompatActivity {
         );
         wrap_content_params.setMargins(0, 0, 0, 60);
 
-        TextView dateVisit = createText("Date Visited: " + "  " + review.date + " at " + review.hour + ":" + (review.minute < 10 ? "0" + review.minute : (review.minute == 0 ? "00" : review.minute)) + (review.am ? " AM" : "PM"), Typeface.BOLD);
+        TextView dateVisit = createText("Date Visited: " + "  " + review.date + " at " + review.hour + ":" + (review.minute < 10 ? "0" + review.minute : (review.minute == 0 ? "00" : review.minute)) + (review.am ? " AM" : " PM"), Typeface.BOLD);
         dateVisit.setLayoutParams(wrap_content_params);
 
         View v = new View(this);
@@ -237,7 +238,7 @@ public class SelectedStoreActivity extends AppCompatActivity {
         staffEff.addView(createText(getResources().getString(R.string.staff_eff) + "   ", Typeface.BOLD));
         staffEff.addView(createRatingBar(review.staffEff.floatValue(), true));
 
-        userCard.addView(createText("Date Visited: " + "  " + review.date + " at " + review.hour + ":" + (review.minute < 10 ? "0" + review.minute : (review.minute == 0 ? "00" : review.minute)) + (review.am ? " AM" : "PM"), Typeface.BOLD));
+        userCard.addView(createText("Date Visited: " + "  " + review.date + " at " + review.hour + ":" + (review.minute < 10 ? "0" + review.minute : (review.minute == 0 ? "00" : review.minute)) + (review.am ? " AM" : " PM"), Typeface.BOLD));
         userCard.addView(queueTime);
         userCard.addView(itemAvail);
         userCard.addView(staffEff);
