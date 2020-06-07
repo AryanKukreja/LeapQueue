@@ -81,6 +81,13 @@ public class LoggedInActivity extends AppCompatActivity {
                 startActivity(new Intent(LoggedInActivity.this, AboutPageActivity.class));
             }
         });
+
+        findViewById(R.id.my_profile).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoggedInActivity.this, UserProfileActivity.class));
+            }
+        });
     }
 
     protected void checkUser() {

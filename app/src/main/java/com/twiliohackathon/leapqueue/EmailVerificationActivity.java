@@ -14,10 +14,12 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import java.sql.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -102,6 +104,7 @@ public class EmailVerificationActivity extends AppCompatActivity {
         Map<String, Object> document = new HashMap<>();
         document.put("first_name", firstName);
         document.put("last_name", lastName);
+        document.put("joined_on", new Timestamp(System.currentTimeMillis()));
 
         FirebaseFirestore.getInstance().collection("Users").document(Objects.requireNonNull(user.getEmail()))
                 .set(document)

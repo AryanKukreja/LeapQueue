@@ -57,8 +57,9 @@ public class UserReviewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_review);
 
-        this.submit = findViewById(R.id.submit);
         this.store = FirebaseFirestore.getInstance();
+
+        this.submit = findViewById(R.id.submit);
         this.delete = findViewById(R.id.delete);
         this.item = findViewById(R.id.item);
         this.queue = findViewById(R.id.queue);

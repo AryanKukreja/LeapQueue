@@ -72,7 +72,7 @@
 
     <string name="Profile">Profile</string>
     <string name="delete_profile">Terminate Account</string>
-    <string name="num_reviews">Number of Reviews</string>
+    <string name="num_reviews">Loading</string>
     <string name="joined_on">Joined on</string>
     <string name="approval_rating">Approval Rating</string>
     <string name="my_reviews_button">My Reviews</string>
