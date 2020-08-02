@@ -30,3 +30,11 @@ Other tools/APIs used were:
 - Google Firebase: Used to maintain a list of users, and handle account sign-in/up (along with email verification). The FirestoreDB was used to save reviews, stores and non-auth information of users.
 - Bing Maps: The **Local Search** API endpoint was used to find a store that the user searches. *As a result, this app currently only works in the USA*.
 - Material UI
+
+# Features
+This app comes with the following capabilities:
+
+1. Users are guided through the review-creation process with built-in questions, and there is an option for extra comments as well.
+2. Users are able to register for an account, add personal info (First and Last Name), and delete their account, all with with ease
+3. The profile page shows statistics for a user (number of reviews, join date, average score, etc...)
+4. Number of reviews per day and week is capped to prevent abuse and spam of the system (Work-In-Progress)
