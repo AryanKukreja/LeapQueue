@@ -28,6 +28,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.travijuu.numberpicker.library.NumberPicker;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -36,7 +37,7 @@ import java.util.Objects;
 
 @SuppressWarnings("ConstantConditions")
 @SuppressLint({"SimpleDateFormat", "SetTextI18n"})
-public class UserReviewActivity extends AppCompatActivity {
+public class ReviewStoreByUser extends AppCompatActivity {
     RatingBar item, staff;
     TextInputEditText comments, date, time;
     NumberPicker queue;
@@ -55,7 +56,7 @@ public class UserReviewActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_review);
+        setContentView(R.layout.activity_review_store_by_user);
 
         this.store = FirebaseFirestore.getInstance();
 
@@ -77,7 +78,7 @@ public class UserReviewActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 final Calendar cal = Calendar.getInstance();
-                datePicker = new DatePickerDialog(UserReviewActivity.this,
+                datePicker = new DatePickerDialog(ReviewStoreByUser.this,
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
@@ -95,7 +96,7 @@ public class UserReviewActivity extends AppCompatActivity {
         this.time.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                timePicker = new TimePickerDialog(UserReviewActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                timePicker = new TimePickerDialog(ReviewStoreByUser.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         time.setText((hourOfDay > 12 ? hourOfDay - 12 : hourOfDay )+ ":" + (minute > 10 ? minute : (minute == 0 ? "00" : "0" + minute)) + (hourOfDay > 12 ? " PM" : " AM"));
@@ -126,8 +127,9 @@ public class UserReviewActivity extends AppCompatActivity {
 
                 queueDateCal = Calendar.getInstance();
                 queueDateCal.setTime(dateVal);
-                this.date.setText(queueDateCal.get(Calendar.DAY_OF_MONTH) + "/" + (queueDateCal.get(Calendar.MONTH) + 1) + "/" + queueDateCal.get(Calendar.YEAR));
-                this.time.setText(queueDateCal.get(Calendar.HOUR_OF_DAY) + ":" + (queueDateCal.get(Calendar.MINUTE) < 10 ? "0" + queueDateCal.get(Calendar.MINUTE) : (queueDateCal.get(Calendar.MINUTE) == 0 ? "00" : queueDateCal.get(Calendar.MINUTE))) + (queueDateCal.get(Calendar.AM_PM) == Calendar.AM ? " AM" : " PM"));
+                this.date.setText((new SimpleDateFormat("d MMM, yyyy")).format(this.dateVal));
+//                this.date.setText(queueDateCal.get(Calendar.DAY_OF_MONTH) + "/" + (queueDateCal.get(Calendar.MONTH) + 1) + "/" + queueDateCal.get(Calendar.YEAR));
+                this.time.setText((queueDateCal.get(Calendar.HOUR_OF_DAY) % 12) + ":" + (queueDateCal.get(Calendar.MINUTE) < 10 ? "0" + queueDateCal.get(Calendar.MINUTE) : (queueDateCal.get(Calendar.MINUTE) == 0 ? "00" : queueDateCal.get(Calendar.MINUTE))) + (queueDateCal.get(Calendar.AM_PM) == Calendar.AM ? " AM" : " PM"));
 
                 this.submit.setText(R.string.update);
 
@@ -152,7 +154,7 @@ public class UserReviewActivity extends AppCompatActivity {
                                                             if (task.isSuccessful()) {
                                                                 finish();
                                                             } else {
-                                                                Toast.makeText(UserReviewActivity.this, "Error: " + task.getException(), Toast.LENGTH_LONG).show();
+                                                                Toast.makeText(ReviewStoreByUser.this, "Error: " + task.getException(), Toast.LENGTH_LONG).show();
                                                             }
                                                         }
                                                     });
@@ -177,6 +179,8 @@ public class UserReviewActivity extends AppCompatActivity {
                     dbData.put("queue_time", String.valueOf(queue.getValue()));
                     dbData.put("staff_efficiency", staff.getRating());
                     dbData.put("date", new Timestamp(queueDateCal.getTimeInMillis()));
+                    dbData.put("down_votes", 0);
+                    dbData.put("up_votes", 0);
 
                     final Map<String, Object> dbData2 = dbData;
                     store.collection("Reviews")
@@ -194,9 +198,9 @@ public class UserReviewActivity extends AppCompatActivity {
                                                     @Override
                                                     public void onComplete(@NonNull Task<Void> task) {
                                                         if (task.isSuccessful()) {
-                                                            Toast.makeText(UserReviewActivity.this, "Your update has been saved. Go back to the last page", Toast.LENGTH_LONG).show();
+                                                            Toast.makeText(ReviewStoreByUser.this, "Your update has been saved. Go back to the last page", Toast.LENGTH_LONG).show();
                                                         } else {
-                                                            Toast.makeText(UserReviewActivity.this, "Error: " + task.getException(), Toast.LENGTH_LONG).show();
+                                                            task.getException().printStackTrace();
                                                         }
                                                     }
                                                 });
@@ -206,12 +210,12 @@ public class UserReviewActivity extends AppCompatActivity {
                                                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                                     @Override
                                                     public void onSuccess(DocumentReference documentReference) {
-                                                    Toast.makeText(UserReviewActivity.this, "Your update has been saved. Go back to the last page", Toast.LENGTH_LONG).show();
+                                                    Toast.makeText(ReviewStoreByUser.this, "Your update has been saved. Go back to the last page", Toast.LENGTH_LONG).show();
                                                     }
                                                 }).addOnFailureListener(new OnFailureListener() {
                                             @Override
                                             public void onFailure(@NonNull Exception e) {
-                                                    Toast.makeText(UserReviewActivity.this, "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                                                    e.printStackTrace();
                                             }
                                         });
                                     }
